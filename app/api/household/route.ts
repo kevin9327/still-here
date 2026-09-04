@@ -3,7 +3,7 @@ import { describeRhythm } from '@/lib/rhythm/model';
 import { describeConcern } from '@/lib/rhythm/engine';
 import { DEMO_DEVICES } from '@/lib/sim/household';
 import { deviceName, household } from '@/lib/store';
-import { familyMessage } from '@/lib/notify/summary';
+import { familyMessagePhrased } from '@/lib/notify/summary';
 
 export const dynamic = 'force-dynamic';
 
@@ -44,6 +44,6 @@ export async function GET() {
       .sort((a, b) => a.at - b.at)
       .slice(-40)
       .map((l) => ({ minute: minuteOf(l.at), kind: l.kind, text: l.text })),
-    familyMessage: h.watch.phase === 'escalated' ? familyMessage(h) : null,
+    familyMessage: h.watch.phase === 'escalated' ? await familyMessagePhrased(h) : null,
   });
 }

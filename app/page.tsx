@@ -27,7 +27,7 @@ interface Snapshot {
   };
   today: { minute: number; type: string; device: string; role: string }[];
   log: { minute: number; kind: string; text: string }[];
-  familyMessage: { text: string; evidence: { timeline: string[]; rhythm: string } } | null;
+  familyMessage: { text: string; source: string; evidence: { timeline: string[]; rhythm: string } } | null;
 }
 
 const hhmm = (m: number) =>
@@ -92,7 +92,14 @@ export default function Page() {
         <p>{banner.detail}</p>
         {s.familyMessage && (
           <div className="message">
-            <div className="to">Sent to family</div>
+            <div className="to">
+              Sent to family · phrased{' '}
+              {s.familyMessage.source === 'ollama'
+                ? 'by a model running in the house'
+                : s.familyMessage.source === 'bedrock'
+                  ? 'by Amazon Bedrock'
+                  : 'from the evidence, no model needed'}
+            </div>
             <p>{s.familyMessage.text}</p>
             <ul className="evidence">
               {s.familyMessage.evidence.timeline.map((t, i) => (

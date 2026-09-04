@@ -95,7 +95,7 @@ the dashboard:
 the escalation policy is covered by unit tests rather than hope:
 
 ```bash
-npm test        # 18 tests
+npm test        # 22 tests
 ```
 
 Guards that come from that test suite:
@@ -118,15 +118,32 @@ Guards that come from that test suite:
 
 ---
 
-## AWS
+## The message, and the gate in front of it
 
-The family message is assembled deterministically first (`lib/notify/summary.ts`) — facts,
-timeline, what the home tried — and Amazon Bedrock is then asked to *rewrite* it kindly, never
-to reason about what happened. If AWS is not configured, the rules version ships as-is, so
-the safety path never depends on a model being reachable.
+The family message is assembled deterministically first (`lib/notify/summary.ts`) — the
+concern, the last sign of life, what the home already tried. A model is then asked to
+*rephrase* that evidence, in this order:
+
+1. **Ollama on the home hub** (`llama3.1:8b` by default) — the description of your mother's
+   morning never leaves her house
+2. **Amazon Bedrock**, if the household has cloud configured
+3. **the deterministic sentence**, which is never wrong
+
+Every draft has to clear a fact gate before it is allowed near a family:
+
+```
+The last sign of life was at 08:16.   ← pre-written; the model must copy it verbatim
+06:44, 08:16, 11:00                   ← the only clock times allowed to appear
+```
+
+This is not theoretical. During development the local model turned *"14 days learned"* into
+*"last sign of life was 14 days ago"* — in a message to a worried family. The gate rejects
+that draft and the rules version ships instead; `tests/summary.test.ts` keeps that exact
+sentence as a regression test.
 
 ```env
-AWS_REGION=us-east-1
+OLLAMA_MODEL=llama3.1:8b            # optional, this is the default
+AWS_REGION=us-east-1                # optional cloud path
 BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20241022-v2:0
 ```
 
