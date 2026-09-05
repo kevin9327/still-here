@@ -89,7 +89,8 @@ Playwright + edge-tts (demo video)
 
 ## Links
 - Repo: https://github.com/kevin9327/still-here (MIT)
-- Demo video: (YouTube, ≤ 3 min, English) — TBD
+- Demo video: https://youtu.be/cAnbiR2ndcw (1:22, English)
+- Devpost entry: https://devpost.com/software/still-here-x7um2q (submitted 2026-09-05)
 - Try it: `npm install && npm run dev` → http://localhost:3000 (sandbox needs no token)
 
 ## Product feedback (required)
