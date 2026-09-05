@@ -10,6 +10,8 @@ an answer. Family is only pulled in when the home itself could not get one.
 Built for the **Build, Ship, Shape: Amazon Developer Hackathon**, Ring track
 (priority categories: caretaking, accessibility).
 
+**[Watch the demo](https://youtu.be/cAnbiR2ndcw)** | **[Devpost submission](https://devpost.com/software/still-here-x7um2q)**
+
 ![dashboard](docs/dashboard.png)
 
 ---
